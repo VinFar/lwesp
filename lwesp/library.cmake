@@ -1,4 +1,4 @@
-# 
+#
 # LIB_PREFIX: LWESP
 #
 # This file provides set of variables for end user
@@ -93,23 +93,23 @@ if(DEFINED LWESP_SYS_PORT)
 endif()
 
 # Register core library to the system
-add_library(lwesp INTERFACE)
-target_sources(lwesp PUBLIC ${lwesp_core_SRCS})
-target_include_directories(lwesp INTERFACE ${lwesp_include_DIRS})
+add_library(lwesp)
+target_sources(lwesp PRIVATE ${lwesp_core_SRCS})
+target_include_directories(lwesp PUBLIC ${lwesp_include_DIRS})
 target_compile_options(lwesp PRIVATE ${LWESP_COMPILE_OPTIONS})
 target_compile_definitions(lwesp PRIVATE ${LWESP_COMPILE_DEFINITIONS})
 
 # Register API to the system
-add_library(lwesp_api INTERFACE)
-target_sources(lwesp_api PUBLIC ${lwesp_api_SRCS})
-target_include_directories(lwesp_api INTERFACE ${lwesp_include_DIRS})
+add_library(lwesp_api)
+target_sources(lwesp_api PRIVATE ${lwesp_api_SRCS})
+target_include_directories(lwesp_api PUBLIC ${lwesp_include_DIRS})
 target_compile_options(lwesp_api PRIVATE ${LWESP_COMPILE_OPTIONS})
 target_compile_definitions(lwesp_api PRIVATE ${LWESP_COMPILE_DEFINITIONS})
 
 # Register apps to the system
-add_library(lwesp_apps INTERFACE)
-target_sources(lwesp_apps PUBLIC ${lwesp_allapps_SRCS})
-target_include_directories(lwesp_apps INTERFACE ${lwesp_include_DIRS})
+add_library(lwesp_apps)
+target_sources(lwesp_apps PRIVATE ${lwesp_allapps_SRCS})
+target_include_directories(lwesp_apps PUBLIC ${lwesp_include_DIRS})
 target_compile_options(lwesp_apps PRIVATE ${LWESP_COMPILE_OPTIONS})
 target_compile_definitions(lwesp_apps PRIVATE ${LWESP_COMPILE_DEFINITIONS})
 
@@ -120,4 +120,5 @@ if(NOT LWESP_OPTS_FILE)
 else()
     message(STATUS "Using custom lwesp_opts.h file from ${LWESP_OPTS_FILE}")
 endif()
+
 configure_file(${LWESP_OPTS_FILE} ${LWESP_CUSTOM_INC_DIR}/lwesp_opts.h COPYONLY)

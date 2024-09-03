@@ -34,6 +34,7 @@
 - Added support for `ESP32-C2` and `ESP32-C6` AT commands
 - SYSFLASH: Split System flash and Manufacturing data to separate commands, following new breaking changes for ESP-AT firmware
 - WPS: Break API compatibility to configure the feature, by adding minimum security level parameter in the `lwesp_wps_set_config` function
+- Rework library CMake with removed INTERFACE type
 
 ## 1.1.2-dev
 
