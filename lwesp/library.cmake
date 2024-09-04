@@ -105,6 +105,7 @@ target_sources(lwesp_api PRIVATE ${lwesp_api_SRCS})
 target_include_directories(lwesp_api PUBLIC ${lwesp_include_DIRS})
 target_compile_options(lwesp_api PRIVATE ${LWESP_COMPILE_OPTIONS})
 target_compile_definitions(lwesp_api PRIVATE ${LWESP_COMPILE_DEFINITIONS})
+target_link_directories(lwesp_api PUBLIC lwesp)
 
 # Register apps to the system
 add_library(lwesp_apps)
@@ -112,6 +113,7 @@ target_sources(lwesp_apps PRIVATE ${lwesp_allapps_SRCS})
 target_include_directories(lwesp_apps PUBLIC ${lwesp_include_DIRS})
 target_compile_options(lwesp_apps PRIVATE ${LWESP_COMPILE_OPTIONS})
 target_compile_definitions(lwesp_apps PRIVATE ${LWESP_COMPILE_DEFINITIONS})
+target_link_directories(lwesp_apps PUBLIC lwesp)
 
 # Create config file if user didn't provide one info himself
 if(NOT LWESP_OPTS_FILE)
