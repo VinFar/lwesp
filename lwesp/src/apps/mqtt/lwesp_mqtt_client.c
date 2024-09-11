@@ -113,6 +113,7 @@ typedef enum {
 #define MQTT_RCV_GET_PACKET_TYPE(d)     ((mqtt_msg_type_t)(((d) >> 0x04) & 0x0F))
 #define MQTT_RCV_GET_PACKET_QOS(d)      ((lwesp_mqtt_qos_t)(((d) >> 0x01) & 0x03))
 #define MQTT_RCV_GET_PACKET_DUP(d)      (((d) >> 0x03) & 0x01)
+#define MQTT_RCV_GET_PACKET_RETAIN(d)   (((d)&0x01))
 
 /* Requests status */
 #define MQTT_REQUEST_FLAG_IN_USE        0x01 /*!< Request object is allocated and in use */
@@ -552,10 +553,11 @@ prv_mqtt_process_incoming_message(lwesp_mqtt_client_p client) {
         }
         case MQTT_MSG_TYPE_PUBLISH: {
             uint16_t topic_len, data_len;
-            uint8_t *topic, *data, dup;
+            uint8_t *topic, *data, dup, retain;
 
-            qos = MQTT_RCV_GET_PACKET_QOS(client->msg_hdr_byte); /* Get QoS from received packet */
-            dup = MQTT_RCV_GET_PACKET_DUP(client->msg_hdr_byte); /* Get duplicate flag */
+            qos = MQTT_RCV_GET_PACKET_QOS(client->msg_hdr_byte);       /* Get QoS from received packet */
+            dup = MQTT_RCV_GET_PACKET_DUP(client->msg_hdr_byte);       /* Get duplicate flag */
+            retain = MQTT_RCV_GET_PACKET_RETAIN(client->msg_hdr_byte); /* Get retain flag */
 
             topic_len = (client->rx_buff[0] << 8) | client->rx_buff[1];
             topic = &client->rx_buff[2]; /* Start of topic */
@@ -597,6 +599,7 @@ prv_mqtt_process_incoming_message(lwesp_mqtt_client_p client) {
             client->evt.evt.publish_recv.payload_len = data_len;
             client->evt.evt.publish_recv.dup = dup;
             client->evt.evt.publish_recv.qos = qos;
+            client->evt.evt.publish_recv.retain = retain;
             client->evt_fn(client, &client->evt);
             break;
         }
