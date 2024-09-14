@@ -1259,7 +1259,7 @@ lwesp_mqtt_client_publish(lwesp_mqtt_client_p client, const char* topic, const v
             if (qos_u8) {
                 prv_write_u16(client, pkt_id); /* Write packet ID */
             }
-            if (payload != NULL && payload_len) {
+            if (payload != NULL && payload_len > 0) {
                 prv_write_data(client, payload, payload_len); /* Write RAW topic payload */
             }
             prv_request_set_pending(client, request); /* Set request as pending waiting for server reply */

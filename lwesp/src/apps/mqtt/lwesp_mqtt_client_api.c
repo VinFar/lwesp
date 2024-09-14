@@ -399,8 +399,6 @@ lwesp_mqtt_client_api_publish(lwesp_mqtt_client_api_p client, const char* topic,
 
     LWESP_ASSERT(client != NULL);
     LWESP_ASSERT(topic != NULL);
-    LWESP_ASSERT(data != NULL);
-    LWESP_ASSERT(btw > 0);
 
     lwesp_sys_mutex_lock(&client->mutex);
     lwesp_sys_sem_wait(&client->sync_sem, 0);
